@@ -1,3 +1,4 @@
+//validate in username textfield
 class Rgisteration_validation {
   String? name_validate(String? input) {
     if ((input?.length ?? 0) > 2) {
@@ -7,6 +8,8 @@ class Rgisteration_validation {
   }
 }
 
+
+//validate on email
 class Rgisteration_validation_email {
   String? email_validate(String? input) {
     if (input == null || input.isEmpty) {
@@ -21,6 +24,8 @@ class Rgisteration_validation_email {
   }
 }
 
+
+//validate on password
 class Rgisteration_validation_password {
   String? password_validate(String? input) {
     if (input == null || input.isEmpty) {
