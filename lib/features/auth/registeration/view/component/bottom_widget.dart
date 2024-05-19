@@ -6,10 +6,11 @@ import 'package:flutter_application_1/features/auth/registeration/controller/cub
 import 'package:flutter_application_1/features/dashboard/modules/users/model/repo/local_db_data.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class BottomNavigationWiget extends StatelessWidget {
-  BottomNavigationWiget({super.key, required this.controller});
+class BottomNavigationWidget extends StatelessWidget {
+  BottomNavigationWidget({super.key, required this.controller});
 
   final RegistrationCubit controller;
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider.value(
@@ -24,36 +25,37 @@ class BottomNavigationWiget extends StatelessWidget {
                 height: context.height / 20,
               ),
               FilledButton(
-                  style: const ButtonStyle(backgroundColor: MaterialStatePropertyAll(Colors.orange)),
-                  onPressed: () async {
-                    await (await DatabaseRepo.instance).insert(name: 'Ahmed', address: 'Tanta');
-
-                    log('added successfully');
-                    // controller.onPressedConfirmButton(context);
-                    await controller.addUser();
-                  },
-                  child: const Text("Confirm")),
+                style: const ButtonStyle(
+                  backgroundColor: MaterialStatePropertyAll(Colors.orange),
+                ),
+                onPressed: () async {
+                  await (await DatabaseRepo.instance).insert(name: 'Ahmed', address: 'Tanta');
+                  log('added successfully');
+                  await controller.addUser();
+                },
+                child: const Text("Confirm"),
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text("have an account ? "),
+                  const Text("Have an account? "),
                   InkWell(
-                    onTap: () async {
-                      // print(await (await DatabaseUserRepo.instance).fetch());
-                      // (await DatabaseUserRepo.instance).insert(name: 'name', address: 'address');
+                    onTap: () {
+                      Navigator.pushNamed(context, 'login');
                     },
                     child: const Text(
-                      "login",
+                      "Login",
                       style: TextStyle(
-                          color: Colors.orange,
-                          decorationStyle: TextDecorationStyle.solid,
-                          decoration: TextDecoration.underline,
-                          decorationColor: Colors.red,
-                          decorationThickness: 3),
+                        color: Colors.orange,
+                        decorationStyle: TextDecorationStyle.solid,
+                        decoration: TextDecoration.underline,
+                        decorationColor: Colors.red,
+                        decorationThickness: 3,
+                      ),
                     ),
-                  )
+                  ),
                 ],
-              )
+              ),
             ],
           );
         },

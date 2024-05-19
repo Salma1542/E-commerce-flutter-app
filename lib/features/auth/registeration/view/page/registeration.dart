@@ -18,7 +18,7 @@ class Rgister extends StatelessWidget {
             return Scaffold(
               body: Data_widget(controller: context.read<RegistrationCubit>()),
               bottomNavigationBar:  SizedBox(
-                child: BottomNavigationWiget(
+                child: BottomNavigationWidget(
                   controller: context.read<RegistrationCubit>(),
                 ),
                 height: 100,

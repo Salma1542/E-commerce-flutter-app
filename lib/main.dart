@@ -10,95 +10,121 @@ import 'package:flutter_application_1/features/dashboard/view/page/dashboard_pag
 import 'package:flutter_application_1/firebase_options.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-void main() async {
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-);
+  runApp(AppInitializer());
+}
 
-  // runApp(MaterialApp());
-  SharedPreferences sharedPrefrences = await SharedPreferences.getInstance();
-  bool onBoarding = sharedPrefrences.getBool('onboarding') ?? false;
-  MaterialApp materialApp = MaterialApp(
-    // home: onBoarding ? Rgister() : OnBoardingPage(),
-    builder: DevicePreview.appBuilder,
-    useInheritedMediaQuery: true,
-    onGenerateRoute: MyRoutes.onGenerateRoute,
-    onGenerateInitialRoutes: (_) => MyRoutes.initRoutes,
-  );
-  runApp(
-    DevicePreview(
+class AppInitializer extends StatefulWidget {
+  @override
+  _AppInitializerState createState() => _AppInitializerState();
+}
+
+class _AppInitializerState extends State<AppInitializer> {
+  bool _isInitialized = false;
+  bool _onBoarding = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeApp();
+  }
+
+  Future<void> _initializeApp() async {
+    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    bool onBoarding = sharedPreferences.getBool('onboarding') ?? false;
+
+    setState(() {
+      _isInitialized = true;
+      _onBoarding = onBoarding;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (!_isInitialized) {
+      return MaterialApp(
+        home: Scaffold(
+          body: Center(child: CircularProgressIndicator()),
+        ),
+      );
+    }
+
+    return DevicePreview(
       enabled: true,
-      builder: (context) => materialApp, // Wrap your app
-    ),
-  );
+      builder: (context) => MaterialApp(
+        useInheritedMediaQuery: true,
+        initialRoute: _onBoarding ? 'registration' : 'splash',
+        onGenerateRoute: MyRoutes.onGenerateRoute,
+      ),
+    );
+  }
 }
 
 class MyRoutes {
-  static List<Route> initRoutes = [
-    MaterialPageRoute<dynamic>(
-        builder: (BuildContext context) => const OnBoardingPage()),
-    MaterialPageRoute<dynamic>(
-        builder: (BuildContext context) => const Rgister()),
-    MaterialPageRoute<dynamic>(
-        builder: (BuildContext context) => const DashbordPage()),
-  ];
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case 'login':
         return MaterialPageRoute<dynamic>(
-            builder: (BuildContext context) => loginPage());
+          builder: (BuildContext context) => loginPage(),
+        );
       case 'registration':
         return MaterialPageRoute<dynamic>(
-            builder: (BuildContext context) => Rgister());
+          builder: (BuildContext context) => Rgister(),
+        );
+      case 'onboarding':
+        return MaterialPageRoute<dynamic>(
+          builder: (BuildContext context) => OnBoardingPage(),
+        );
+      case 'splash':
+        return MaterialPageRoute<dynamic>(
+          builder: (BuildContext context) => SplashScreen(),
+        );
       default:
         return MaterialPageRoute<dynamic>(
-            builder: (BuildContext context) => OnBoardingPage());
+          builder: (BuildContext context) => OnBoardingPage(),
+        );
     }
   }
 }
-// void main() async {
-//   WidgetsFlutterBinding.ensureInitialized();
-//   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-//   bool onBoarding = sharedPreferences.getBool('onboarding') ?? false;
-
-//   runApp(MaterialApp(
-//     debugShowCheckedModeBanner: false,
-//     home: onBoarding ? Rgister() : OnBoardingPage(),
-//   ));
-// }
-
-// void main() {
-//   runApp(const MyApp());
-// }
-
-// class MyApp extends StatelessWidget {
-//   const MyApp({super.key});
-
-//   // This widget is the root of your application.
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(debugShowCheckedModeBanner: false, home: SplashScreen());
-//   }
-// }
 
 class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // Delay navigation by 1 second (adjust the duration as needed)
+    // Delay navigation by 2 seconds (adjust the duration as needed)
     Future.delayed(Duration(seconds: 2), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder: (context) =>
-                OnBoardingPage()), // Navigate to the registration screen
-      );
+      Navigator.pushReplacementNamed(context, 'onboarding');
     });
 
     return Scaffold(
-        body: Center(
-      child: Image.asset(
-          'assets/images/favplant.jpg'), // Display the splash screen image
-    ));
+      body: Center(
+        child: Image.asset(
+          'assets/images/favplant.jpg', // Display the splash screen image
+        ),
+      ),
+    );
   }
 }
+ Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Onboarding Page'),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, 'login');
+              },
+              child: Text('Go to Login'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+
+
+
