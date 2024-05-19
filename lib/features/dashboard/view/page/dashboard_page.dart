@@ -25,7 +25,7 @@ class DashbordPage extends StatelessWidget {
               actions: [
                 IconButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, 'registration');
+                      Navigator.pushNamed(context, 'login');
                     },
                     icon: Icon(CupertinoIcons.add))
               ],

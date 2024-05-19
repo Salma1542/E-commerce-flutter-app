@@ -6,6 +6,7 @@ import 'package:flutter_application_1/features/auth/registeration/view/page/regi
 import 'package:flutter_application_1/features/auth/registeration/view/component/loginPage.dart';
 import 'package:flutter_application_1/features/auth/registeration/view/component/forget_password.dart';
 import 'package:flutter_application_1/features/auth/verification/view/page/verification_page.dart';
+import 'package:flutter_application_1/features/dashboard/controller/dashboard_controller.dart';
 import 'package:flutter_application_1/features/dashboard/view/page/dashboard_page.dart';
 import 'package:flutter_application_1/firebase_options.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -80,6 +81,10 @@ class MyRoutes {
       case 'splash':
         return MaterialPageRoute<dynamic>(
           builder: (BuildContext context) => SplashScreen(),
+        );
+        case 'dashboard':
+         return MaterialPageRoute<dynamic>(
+          builder: (BuildContext context) => DashbordPage(),
         );
       default:
         return MaterialPageRoute<dynamic>(
