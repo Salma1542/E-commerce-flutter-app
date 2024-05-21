@@ -3,11 +3,12 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/core/utilis/context_extension.dart';
 import 'package:flutter_application_1/features/auth/registeration/controller/cubit/registration_cubit.dart';
+import 'package:flutter_application_1/features/auth/registeration/view/component/confirm_password.dart';
 import 'package:flutter_application_1/features/dashboard/modules/users/model/repo/local_db_data.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BottomNavigationWidget extends StatelessWidget {
-  BottomNavigationWidget({super.key, required this.controller});
+  BottomNavigationWidget({Key? key, required this.controller}) : super(key: key);
 
   final RegistrationCubit controller;
 
@@ -32,6 +33,12 @@ class BottomNavigationWidget extends StatelessWidget {
                   await (await DatabaseRepo.instance).insert(name: 'Ahmed', address: 'Tanta');
                   log('added successfully');
                   await controller.addUser();
+                  // Navigate to the Confirm Password page
+                  // Navigator.pushNamed(context, 'confirm_password');
+                   Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) =>Confirm_pass ()),
+            );
                 },
                 child: const Text("Confirm"),
               ),

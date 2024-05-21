@@ -2,14 +2,18 @@ import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/features/auth/onboarding/view/page/onboarding_page.dart';
+import 'package:flutter_application_1/features/auth/registeration/view/component/confirm_password.dart';
 import 'package:flutter_application_1/features/auth/registeration/view/page/registeration.dart';
 import 'package:flutter_application_1/features/auth/registeration/view/component/loginPage.dart';
 import 'package:flutter_application_1/features/auth/registeration/view/component/forget_password.dart';
 import 'package:flutter_application_1/features/auth/verification/view/page/verification_page.dart';
 import 'package:flutter_application_1/features/dashboard/controller/dashboard_controller.dart';
+import 'package:flutter_application_1/features/dashboard/modules/product/view/page/product_page.dart';
 import 'package:flutter_application_1/features/dashboard/view/page/dashboard_page.dart';
 import 'package:flutter_application_1/firebase_options.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'features/dashboard/modules/new_product/view/page/new_product_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,7 +24,6 @@ class AppInitializer extends StatefulWidget {
   @override
   _AppInitializerState createState() => _AppInitializerState();
 }
-
 class _AppInitializerState extends State<AppInitializer> {
   bool _isInitialized = false;
   bool _onBoarding = false;
@@ -84,7 +87,15 @@ class MyRoutes {
         );
         case 'dashboard':
          return MaterialPageRoute<dynamic>(
-          builder: (BuildContext context) => DashbordPage(),
+          builder: (BuildContext context) => DashboardPage(),
+        );
+        case 'confirm_password':
+         return MaterialPageRoute<dynamic>(
+          builder: (BuildContext context) => Confirm_pass(),
+        );
+         case 'new_product':
+        return MaterialPageRoute<dynamic>(
+          builder: (BuildContext context) => NewProductPage(), // ProductPage route
         );
       default:
         return MaterialPageRoute<dynamic>(
@@ -98,7 +109,7 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Delay navigation by 2 seconds (adjust the duration as needed)
-    Future.delayed(Duration(seconds: 2), () {
+    Future.delayed(Duration(seconds: 5), () {
       Navigator.pushReplacementNamed(context, 'onboarding');
     });
 

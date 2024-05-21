@@ -1,9 +1,8 @@
+// // login_page.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/features/auth/registeration/view/component/my-putton.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+// import 'package:flutter_application_1/features/auth/registeration/view/component/my_button.dart';
 import 'package:flutter_application_1/features/auth/registeration/view/page/forget_password.dart';
-import 'package:flutter_application_1/features/dashboard/view/page/dashboard_page.dart';
-import 'package:flutter_application_1/features/auth/registeration/controller/cubit/registration_cubit.dart';
 
 class loginPage extends StatelessWidget {
   loginPage({super.key});
